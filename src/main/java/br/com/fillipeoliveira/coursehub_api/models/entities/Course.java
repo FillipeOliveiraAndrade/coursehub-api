@@ -10,7 +10,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-
+import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
 
 @Entity(name = "course")
@@ -21,7 +21,10 @@ public class Course {
   @GeneratedValue(strategy = GenerationType.UUID)
   private UUID id;
 
+  @NotBlank(message = "O campo [name] não pode estar nulo")
   private String name;
+
+  @NotBlank(message = "O campo [category] não pode estar nulo")
   private String category;
   // private boolean active;
 
