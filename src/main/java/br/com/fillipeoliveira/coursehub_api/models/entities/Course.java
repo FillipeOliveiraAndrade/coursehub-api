@@ -26,7 +26,8 @@ public class Course {
 
   @NotBlank(message = "O campo [category] não pode estar nulo")
   private String category;
-  // private boolean active;
+  
+  private boolean active = true;
 
   @CreationTimestamp
   private LocalDateTime createdAt;
