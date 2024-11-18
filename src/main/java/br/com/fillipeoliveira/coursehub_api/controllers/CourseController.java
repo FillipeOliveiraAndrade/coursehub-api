@@ -32,9 +32,12 @@ public class CourseController {
     return ResponseEntity.ok().body(result);
   }
 
-  @GetMapping
-  public ResponseEntity<List<Course>> findAllCourses() {
-    List<Course> courses = this.courseService.findAll();
-    return ResponseEntity.ok().body(courses);
+  @GetMapping()
+  public ResponseEntity<List<Course>> findCoursesByNameAndCategory(
+    @RequestParam(required = false) String name,
+    @RequestParam(required = false) String category
+  ) {
+    List<Course> result = this.courseService.findCoursesWithFiltersOrNot(name, category);
+    return ResponseEntity.ok().body(result);
   }
 }
