@@ -1,5 +1,6 @@
 package br.com.fillipeoliveira.coursehub_api.models.repositories;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -9,4 +10,5 @@ import br.com.fillipeoliveira.coursehub_api.models.entities.Course;
 
 public interface CourseRepository extends JpaRepository<Course, UUID> {
   Optional<Course> findByNameAndCategory(String name, String category);
+  List<Course> findByNameOrCategory(String name, String category);
 }
