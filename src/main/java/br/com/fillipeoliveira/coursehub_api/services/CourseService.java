@@ -20,7 +20,7 @@ public class CourseService {
   private CourseRepository courseRepository;
 
   public Course create(Course newCourse) {
-    Optional<Course> course = this.courseRepository.findByNameAndCategory(newCourse.getName(), newCourse.getCategory());
+    Optional<Course> course = this.courseRepository.findByNameAndCategoryIgnoreCase(newCourse.getName(), newCourse.getCategory());
 
     if (course.isPresent()) {
       throw new CourseConflictException("Este curso já existe em nosso banco de dados.");
@@ -31,10 +31,10 @@ public class CourseService {
 
   public List<Course> findCoursesWithFiltersOrNot(String name, String category) {
     if (name == null && category == null) return this.courseRepository.findAll();
-    if (name == null) return this.courseRepository.findByNameOrCategory(null, category); // Filtrando apenas pela category
-    if (category == null) return this.courseRepository.findByNameOrCategory(name, null); // Filtrando apenas pelo nome
+    if (name == null) return this.courseRepository.findByNameOrCategoryIgnoreCase(null, category); // Filtrando apenas pela category
+    if (category == null) return this.courseRepository.findByNameOrCategoryIgnoreCase(name, null); // Filtrando apenas pelo nome
 
-    Optional<Course> courses = this.courseRepository.findByNameAndCategory(name, category);
+    Optional<Course> courses = this.courseRepository.findByNameAndCategoryIgnoreCase(name, category);
     return courses.map(Collections::singletonList).orElse(Collections.emptyList()); // convertendo o optional para list (reaproveitando a função findByNameAndCategory)
   }
 

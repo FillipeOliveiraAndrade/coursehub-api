@@ -9,6 +9,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import br.com.fillipeoliveira.coursehub_api.models.entities.Course;
 
 public interface CourseRepository extends JpaRepository<Course, UUID> {
-  Optional<Course> findByNameAndCategory(String name, String category);
-  List<Course> findByNameOrCategory(String name, String category);
+  Optional<Course> findByNameAndCategoryIgnoreCase(String name, String category);
+  List<Course> findByNameOrCategoryIgnoreCase(String name, String category);
 }
