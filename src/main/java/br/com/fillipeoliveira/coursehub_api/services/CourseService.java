@@ -23,7 +23,7 @@ public class CourseService {
     Optional<Course> course = this.courseRepository.findByNameAndCategoryIgnoreCase(newCourse.getName(), newCourse.getCategory());
 
     if (course.isPresent()) {
-      throw new CourseConflictException("Este curso já existe em nosso banco de dados.");
+      throw new CourseConflictException("This course already exists in our database.");
     }
 
     return this.courseRepository.save(newCourse);
@@ -40,35 +40,39 @@ public class CourseService {
 
   public Course update(UUID id, Course courseModified) {
     Course existingCourse = this.courseRepository.findById(id)
-            .orElseThrow(() -> new CourseNotFoundException("Curso não encontrado."));
+            .orElseThrow(() -> new CourseNotFoundException("Course not found."));
 
     if (courseModified == null) {
-        throw new IllegalArgumentException("Dados do curso para modificação não podem ser nulos.");
+      throw new IllegalArgumentException("Course data for modification cannot be null.");
     }
 
     if (courseModified.getName() != null) {
-        existingCourse.setName(courseModified.getName());
+      existingCourse.setName(courseModified.getName());
     }
 
     if (courseModified.getCategory() != null) {
-        existingCourse.setCategory(courseModified.getCategory());
+      existingCourse.setCategory(courseModified.getCategory());
     }
 
     return this.courseRepository.save(existingCourse);
   }
 
   public Course updateActive(UUID id, boolean active) {
-    Course existingCourse = this.courseRepository.findById(id)
-            .orElseThrow(() -> new CourseNotFoundException("Curso não encontrado."));
+    Course course = this.courseRepository.findById(id)
+            .orElseThrow(() -> new CourseNotFoundException("Course not found."));
 
-    existingCourse.setActive(active);
+    if (course.isActive() == active) {
+      return course;
+    }
 
-    return this.courseRepository.save(existingCourse);
+    course.setActive(active);
+
+    return this.courseRepository.save(course);
   }
 
   public void delete(UUID id) {
     if (!this.courseRepository.existsById(id)) {
-      throw new CourseNotFoundException("Curso não encontrado.");
+      throw new CourseNotFoundException("Course not found.");
     }
 
     this.courseRepository.deleteById(id);
