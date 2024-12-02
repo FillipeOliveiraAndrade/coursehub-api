@@ -53,7 +53,7 @@ public class CreateCourseControllerTest {
         .category("CATEGORY_TEST")
         .active(true)
         .build();
-    
+
     mvc.perform(MockMvcRequestBuilders.post("/courses")
         .contentType(MediaType.APPLICATION_JSON)
         .content(TestUtils.objectToJson(courseDTO)))
@@ -118,10 +118,10 @@ public class CreateCourseControllerTest {
         .content(TestUtils.objectToJson(courseDTO)))
       .andExpect(MockMvcResultMatchers.status().isBadRequest())
       .andExpect(result -> {
-        Exception exception = result.getResolvedException();
+          Exception exception = result.getResolvedException();
 
-        assertTrue(exception instanceof CourseConflictException);
-        assertEquals(exception.getMessage(), "This course already exists in our database.");
-      });
+          assertTrue(exception instanceof CourseConflictException);
+          assertEquals(exception.getMessage(), "This course already exists in our database.");
+        });
   }
 }
