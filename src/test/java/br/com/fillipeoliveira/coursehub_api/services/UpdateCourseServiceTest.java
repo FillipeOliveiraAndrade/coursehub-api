@@ -37,8 +37,13 @@ public class UpdateCourseServiceTest {
   @Test
   @DisplayName("Should throw an error when updating a non-existent course")
   public void shouldThrowWhenUpdatingNonExistentCourse() {
+    Course mockCourse = Course.builder()
+        .name("TEST_NAME")
+        .category("TEST_CATEGORY")
+        .build();
+
     Exception exception = assertThrows(CourseNotFoundException.class, () -> {
-      this.courseService.update(null, null);
+      this.courseService.update(null, mockCourse);
     });
 
     assertEquals("Course not found.", exception.getMessage(), "The exception message should match.");
@@ -47,16 +52,15 @@ public class UpdateCourseServiceTest {
   @Test
   @DisplayName("Should throw an error when course data for update is null")
   public void shouldThrowWhenUpdateDataIsNull() {
-    UUID id = TestUtils.generateId();
-    Course mockCourse = TestUtils.mockCourse(id, "test", "category", false);
+    String messageErrorExpected = "Course data for modification cannot be null.";
 
-    when(this.courseRepository.findById(id)).thenReturn(Optional.of(mockCourse));
+    Course courseNull = Course.builder().build();
 
     Exception exception = assertThrows(IllegalArgumentException.class, () -> {
-      this.courseService.update(id, null);
+      this.courseService.update(null, courseNull);
     });
 
-    assertEquals("Course data for modification cannot be null.", exception.getMessage(), "The exception message should match.");
+    assertEquals(messageErrorExpected, exception.getMessage(), "The exception message should match.");
   }
 
   @Test
