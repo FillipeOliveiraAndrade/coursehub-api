@@ -16,7 +16,7 @@ public record CourseDTO(
   @Schema(example = "Back-End", requiredMode = RequiredMode.REQUIRED)
   String category,
 
-  @Schema(example = "true", requiredMode = RequiredMode.REQUIRED)
+  @Schema(example = "true")
   Boolean active
 ) {
   

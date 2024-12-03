@@ -126,6 +126,6 @@ public class UpdateCourseServiceTest {
     assertNotNull(result, "The course should still be returned.");
     assertTrue(result.isActive(), "The course should remain active.");
     
-    verify(this.courseRepository, never()).save(any()); // Should not save if no change occurred
+    verify(this.courseRepository, never()).save(any());
   }
 }

@@ -3,8 +3,6 @@ package br.com.fillipeoliveira.coursehub_api.controllers;
 import static org.junit.Assert.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -72,8 +70,9 @@ public class DeleteCourseControllerTest {
       .andExpect(result -> {
         Exception exception = result.getResolvedException();
 
+        String messageErrorExpected = "Course not found.";
         assertTrue(exception instanceof CourseNotFoundException);
-        assertEquals("Course not found.", exception.getMessage());
+        assertEquals(messageErrorExpected, exception.getMessage());
       });
   }
 }

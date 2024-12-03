@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.fillipeoliveira.coursehub_api.dto.CourseDTO;
+import br.com.fillipeoliveira.coursehub_api.dto.CourseUpdateDTO;
 import br.com.fillipeoliveira.coursehub_api.models.entities.Course;
 import br.com.fillipeoliveira.coursehub_api.services.CourseService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -50,8 +51,8 @@ public class CourseController {
 
   @PutMapping("/{id}")
   @Operation(description = "Essa função é responsável por atualizar um curso baseado em seu ID.")
-  public ResponseEntity<Course> updatingCourseById(@PathVariable UUID id, @RequestBody Course course) {
-    Course result = this.courseService.update(id, course);
+  public ResponseEntity<Course> updatingCourseById(@PathVariable UUID id, @RequestBody CourseUpdateDTO courseUpdateDTO) {
+    Course result = this.courseService.update(id, courseUpdateDTO.toEntity());
     return ResponseEntity.ok().body(result);
   }
 
@@ -69,6 +70,6 @@ public class CourseController {
   @Operation(description = "Essa função é responsável por apagar um curso do banco de dados.")
   public ResponseEntity<Void> deleteCourseById(@PathVariable UUID id) {
     this.courseService.delete(id);
-    return ResponseEntity.ok().build();
+    return ResponseEntity.noContent().build();
   }
 }

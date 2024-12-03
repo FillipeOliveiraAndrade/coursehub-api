@@ -18,10 +18,17 @@ public class GlobalControllerAdvice {
 
     @ExceptionHandler({
       CourseConflictException.class,
-      CourseNotFoundException.class
+      IllegalArgumentException.class
     })
-    public ResponseEntity<String> handleExceptionResponse(RuntimeException exception) {
+    public ResponseEntity<String> handleExceptionResponseBadResquest(RuntimeException exception) {
       return ResponseEntity.badRequest().body(exception.getMessage());
+    }
+
+    @ExceptionHandler({
+      CourseNotFoundException.class,
+    })
+    public ResponseEntity<String> handleExceptionResponseNotFound(RuntimeException exception) {
+      return ResponseEntity.notFound().build();
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)

@@ -39,12 +39,13 @@ public class CourseService {
   }
 
   public Course update(UUID id, Course courseModified) {
-    Course existingCourse = this.courseRepository.findById(id)
-            .orElseThrow(() -> new CourseNotFoundException("Course not found."));
-
-    if (courseModified == null) {
+    if (
+        courseModified.getName() == null && courseModified.getCategory() == null) {
       throw new IllegalArgumentException("Course data for modification cannot be null.");
     }
+
+    Course existingCourse = this.courseRepository.findById(id)
+            .orElseThrow(() -> new CourseNotFoundException());
 
     if (courseModified.getName() != null) {
       existingCourse.setName(courseModified.getName());
@@ -59,7 +60,7 @@ public class CourseService {
 
   public Course updateActive(UUID id, boolean active) {
     Course course = this.courseRepository.findById(id)
-            .orElseThrow(() -> new CourseNotFoundException("Course not found."));
+            .orElseThrow(() -> new CourseNotFoundException());
 
     if (course.isActive() == active) {
       return course;
@@ -72,7 +73,7 @@ public class CourseService {
 
   public void delete(UUID id) {
     if (!this.courseRepository.existsById(id)) {
-      throw new CourseNotFoundException("Course not found.");
+      throw new CourseNotFoundException();
     }
 
     this.courseRepository.deleteById(id);

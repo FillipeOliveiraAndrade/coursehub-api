@@ -91,6 +91,7 @@ public class UpdateCourseControllerTest {
         });
   }
 
+  @SuppressWarnings("null")
   @Test
   @DisplayName("Should return BadRequest when course data is null")
   public void shouldReturnBadRequestWhenCourseDataIsNull() throws Exception {
