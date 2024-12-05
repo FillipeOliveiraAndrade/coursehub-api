@@ -52,12 +52,15 @@ public class UpdateCourseServiceTest {
   @Test
   @DisplayName("Should throw an error when course data for update is null")
   public void shouldThrowWhenUpdateDataIsNull() {
+    UUID id = TestUtils.generateId();
+    Course mockCourse = TestUtils.mockCourse(id, "old name", "old category", false);
+    Course courseNull = Course.builder().name("").category("").build();
+
+    when(this.courseRepository.findById(id)).thenReturn(Optional.of(mockCourse));
+
     String messageErrorExpected = "Course data for modification cannot be null.";
-
-    Course courseNull = Course.builder().build();
-
     Exception exception = assertThrows(IllegalArgumentException.class, () -> {
-      this.courseService.update(null, courseNull);
+      this.courseService.update(id, courseNull);
     });
 
     assertEquals(messageErrorExpected, exception.getMessage(), "The exception message should match.");

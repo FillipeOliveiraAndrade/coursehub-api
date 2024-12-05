@@ -20,6 +20,10 @@ public class CourseService {
   private CourseRepository courseRepository;
 
   public Course create(Course newCourse) {
+    if(newCourse.getName().isEmpty() || newCourse.getCategory().isEmpty()) {
+      throw new IllegalArgumentException("Please fill in all fields correctly to register the course.");
+    }
+
     Optional<Course> course = this.courseRepository.findByNameAndCategoryIgnoreCase(newCourse.getName(), newCourse.getCategory());
 
     if (course.isPresent()) {
@@ -38,20 +42,29 @@ public class CourseService {
     return courses.map(Collections::singletonList).orElse(Collections.emptyList()); // convertendo o optional para list (reaproveitando a função findByNameAndCategory)
   }
 
+  public Course findById(UUID id) {
+    Optional<Course> course = this.courseRepository.findById(id);
+
+    if (course.isEmpty()) {
+      throw new CourseNotFoundException();
+    }
+
+    return course.get();
+  }
+
   public Course update(UUID id, Course courseModified) {
-    if (
-        courseModified.getName() == null && courseModified.getCategory() == null) {
+    Course existingCourse = this.courseRepository.findById(id)
+        .orElseThrow(() -> new CourseNotFoundException());
+
+    if (courseModified.getName().isEmpty() && courseModified.getCategory().isEmpty()) {
       throw new IllegalArgumentException("Course data for modification cannot be null.");
     }
 
-    Course existingCourse = this.courseRepository.findById(id)
-            .orElseThrow(() -> new CourseNotFoundException());
-
-    if (courseModified.getName() != null) {
+    if (!courseModified.getName().isEmpty()) {
       existingCourse.setName(courseModified.getName());
     }
 
-    if (courseModified.getCategory() != null) {
+    if (!courseModified.getCategory().isEmpty()) {
       existingCourse.setCategory(courseModified.getCategory());
     }
 

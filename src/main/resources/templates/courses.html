@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<script src="https://cdn.tailwindcss.com"></script>
+		<title>CourseHub</title>
+	</head>
+	<body class="bg-[#141414] text-white font-sans flex items-center justify-center h-screen flex-col">
+		<h1 class="text-2xl font-bold text-[#7C3AFF]">Cursos</h1>
+
+		<div class="overflow-x-auto w-full px-4">
+			<table class="table-auto border-collapse mx-auto mt-6 w-full max-w-[800px]">
+				<thead class="bg-[#7C3AFF]">
+					<tr class="text-white">
+						<th class="px-4 py-2 border">Curso</th>
+						<th class="px-4 py-2 border">Categoria</th>
+						<th class="px-4 py-2 border">Professor(a)</th>
+						<th class="px-4 py-2 border">Ativo</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr class="bg-[#1B1B1B] even:bg-[#212121]" th:each="course: ${courses}">
+						<td class="px-4 py-2 border text-center">
+							<a th:href="@{/view/courses/details/{id}(id=${course.id})}" th:text="${course.name}"></a>
+						</td>
+						<td class="px-4 py-2 border text-center" th:text="${course.category}"></td>
+						<td class="px-4 py-2 border text-center">Sem professor</td>
+						<td class="px-4 py-2 border text-center" th:text="${course.active} ? 'Sim' : 'Não'"></td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+
+		<a href="/view/courses/create" class="mt-6 inline-block px-6 py-3 bg-[#7C3AFF] text-white rounded-lg hover:bg-purple-700">
+			Novo curso
+		</a>
+	</body>
+</html>

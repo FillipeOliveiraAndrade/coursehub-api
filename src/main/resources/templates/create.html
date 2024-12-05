@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <title>Cadastro de Cursos</title>
+</head>
+  <body class="bg-[#141414] text-white font-sans flex items-center justify-center h-screen flex-col">
+    <h1 class="text-2xl font-bold text-[#7C3AFF] mb-6">Criando Curso</h1>
+
+    <div class="bg-[#1B1B1B] p-6 rounded-lg shadow-xl w-96 space-y-6">
+      <form action="#" method="POST" th:object="${course}" th:action="@{/view/courses/create}">
+        <div class="space-y-4">
+          <div>
+            <label for="name" class="block text-sm font-medium text-white">Nome</label>
+            <input
+              type="text"
+              id="name"
+              name="name"
+              th:field="*{name}"
+              class="mt-2 block w-full p-2 rounded-md bg-[#212121] text-white border border-gray-600 focus:outline-none focus:ring-2 focus:ring-purple-500"
+              placeholder="Nome do curso"
+            >
+          </div>
+
+          <div>
+            <label for="category" class="block text-sm font-medium text-white">Categoria</label>
+            <input
+              type="text"
+              id="category"
+              name="category"
+              th:field="*{category}"
+              class="mt-2 block w-full p-2 rounded-md bg-[#212121] text-white border border-gray-600 focus:outline-none focus:ring-2 focus:ring-purple-500"
+              placeholder="Categoria do curso"
+            >
+          </div>
+
+          <!-- <div>
+            <label for="teacher" class="block text-sm font-medium text-white">Professor(a)</label>
+            <input type="text" id="teacher" name="teacher" class="mt-2 block w-full p-2 rounded-md bg-[#212121] text-white border border-gray-600 focus:outline-none focus:ring-2 focus:ring-purple-500" placeholder="Nome do professor">
+          </div> -->
+
+          <div>
+            <label for="active" class="block text-sm font-medium text-white">Ativo</label>
+            <select id="active" name="active" class="mt-2 block w-full p-2 rounded-md bg-[#212121] text-white border border-gray-600 focus:outline-none focus:ring-2 focus:ring-purple-500 appearance-none">
+              <option value="true">Sim</option>
+              <option value="false">Não</option>
+            </select>            
+          </div>
+        </div>
+        
+        <p class="text-red-400 mt-6" th:if="${error_message}" th:text="${error_message}" ></p>
+
+        <button type="submit" class="mt-6 w-full py-2 px-4 bg-[#7C3AFF] text-white rounded-lg hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-purple-500">
+          Cadastrar
+        </button>
+      </form>
+    </div>
+  </body>
+</html>
